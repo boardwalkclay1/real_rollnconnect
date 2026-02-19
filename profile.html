@@ -11,21 +11,37 @@
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+  <div class="stars1"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+
   <header class="app-header">
     <h1>My Profile</h1>
   </header>
 
   <main class="profile-page">
-    <section class="profile-header">
+    <!-- Top: avatar + 3-second clip + basic info -->
+    <section class="profile-header glass">
       <div class="avatar-wrapper">
         <img id="profile-avatar" src="assets/images/default-avatar.png" alt="Avatar">
-        <button id="change-avatar-btn" class="btn small">Change</button>
+        <button id="change-avatar-btn" class="btn small">Pic</button>
       </div>
       <div class="profile-main-info">
         <h2 id="profile-username">@username</h2>
-        <p id="profile-bio">Bio goes here…</p>
+        <p id="profile-bio">Tell people who you are, what you skate, and where you roll.</p>
         <button id="edit-profile-btn" class="btn secondary">Edit Profile</button>
       </div>
+    </section>
+
+    <section class="glass" style="padding:16px 16px 20px;">
+      <h3 style="font-size:0.95rem; margin-bottom:6px;">Intro clip</h3>
+      <p style="font-size:0.8rem; opacity:0.8; margin-bottom:8px;">
+        Add a 3‑second clip that plays on your profile. Keep it simple: one move, one vibe.
+      </p>
+      <video id="profile-clip" controls style="width:100%; border-radius:16px; max-height:220px; background:#000;">
+        <!-- src set by profile.js -->
+      </video>
+      <button id="change-clip-btn" class="btn small" style="margin-top:8px;">Change clip</button>
     </section>
 
     <section class="profile-stats">
@@ -51,7 +67,7 @@
 
     <section class="profile-content">
       <div id="profile-posts" class="tab-panel active">
-        <!-- Video posts, likes, comments (handled by profile.js) -->
+        <!-- Video posts, likes, comments -->
       </div>
       <div id="profile-events" class="tab-panel">
         <!-- Joined events -->
@@ -60,12 +76,27 @@
         <!-- Saved spots -->
       </div>
     </section>
+
+    <!-- Personal calendar at bottom -->
+    <section class="glass" style="margin-top:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <h3 style="font-size:0.95rem;">Your calendar</h3>
+        <a href="calendar.html" class="btn small secondary">Open full</a>
+      </div>
+      <p style="font-size:0.8rem; opacity:0.8; margin-bottom:8px;">
+        This shows your upcoming sessions from Events and Spots. You can add more from any page.
+      </p>
+      <div id="profile-calendar">
+        <!-- Small personal calendar view rendered by app.js/profile.js -->
+      </div>
+    </section>
   </main>
 
   <nav class="bottom-nav">
     <a href="index.html" class="nav-item">Home</a>
     <a href="find-spots.html" class="nav-item">Spots</a>
     <a href="events.html" class="nav-item">Events</a>
+    <a href="calendar.html" class="nav-item">Calendar</a>
     <a href="profile.html" class="nav-item active">Profile</a>
   </nav>
 
@@ -83,8 +114,10 @@
           Bio
           <textarea id="edit-bio"></textarea>
         </label>
-        <!-- More fields later: links, location, etc. -->
-        <button type="submit" class="btn primary">Save</button>
+        <p style="font-size:0.75rem; opacity:0.7; margin-top:6px;">
+          Your profile is your hub. Keep it clear so people know how to connect with you.
+        </p>
+        <button type="submit" class="btn primary" style="margin-top:10px;">Save</button>
       </form>
     </div>
   </div>
