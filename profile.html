@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile • Roll ’n Connect</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#000000">
+
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>My Profile</h1>
+  </header>
+
+  <main class="profile-page">
+    <section class="profile-header">
+      <div class="avatar-wrapper">
+        <img id="profile-avatar" src="assets/images/default-avatar.png" alt="Avatar">
+        <button id="change-avatar-btn" class="btn small">Change</button>
+      </div>
+      <div class="profile-main-info">
+        <h2 id="profile-username">@username</h2>
+        <p id="profile-bio">Bio goes here…</p>
+        <button id="edit-profile-btn" class="btn secondary">Edit Profile</button>
+      </div>
+    </section>
+
+    <section class="profile-stats">
+      <div class="stat">
+        <span id="profile-post-count">0</span>
+        <label>Posts</label>
+      </div>
+      <div class="stat">
+        <span id="profile-events-count">0</span>
+        <label>Events</label>
+      </div>
+      <div class="stat">
+        <span id="profile-spots-count">0</span>
+        <label>Spots</label>
+      </div>
+    </section>
+
+    <section class="profile-tabs">
+      <button class="tab active" data-tab="posts">Posts</button>
+      <button class="tab" data-tab="events">Events</button>
+      <button class="tab" data-tab="spots">Spots</button>
+    </section>
+
+    <section class="profile-content">
+      <div id="profile-posts" class="tab-panel active">
+        <!-- Video posts, likes, comments (handled by profile.js) -->
+      </div>
+      <div id="profile-events" class="tab-panel">
+        <!-- Joined events -->
+      </div>
+      <div id="profile-spots" class="tab-panel">
+        <!-- Saved spots -->
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">Home</a>
+    <a href="find-spots.html" class="nav-item">Spots</a>
+    <a href="events.html" class="nav-item">Events</a>
+    <a href="profile.html" class="nav-item active">Profile</a>
+  </nav>
+
+  <!-- Edit profile modal -->
+  <div class="modal" id="edit-profile-modal" hidden>
+    <div class="modal-content">
+      <button class="modal-close" data-close-modal>&times;</button>
+      <h2>Edit Profile</h2>
+      <form id="edit-profile-form">
+        <label>
+          Username
+          <input type="text" id="edit-username">
+        </label>
+        <label>
+          Bio
+          <textarea id="edit-bio"></textarea>
+        </label>
+        <!-- More fields later: links, location, etc. -->
+        <button type="submit" class="btn primary">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>
