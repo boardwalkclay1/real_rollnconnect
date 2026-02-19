@@ -5,25 +5,32 @@
   <title>Roll ’n Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- PWA hooks -->
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#000000">
 
-  <!-- Global styles (you’ll provide app.css later) -->
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+  <!-- Optional starfield background -->
+  <div class="stars1"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+
   <header class="app-header">
     <h1>Roll ’n Connect</h1>
   </header>
 
   <main class="landing">
-    <section class="hero">
-      <h2>Find spots. Join events. Roll together.</h2>
+    <section class="hero glass">
+      <h2>Find spots. Join events. Own your calendar.</h2>
+      <p style="margin-bottom: 24px; opacity: 0.85;">
+        A connected ecosystem for skaters to discover spots, track sessions, and share clips.
+      </p>
       <div class="hero-actions">
         <a href="find-spots.html" class="btn primary">Find Spots</a>
         <a href="events.html" class="btn secondary">Events</a>
-        <a href="profile.html" class="btn ghost">My Profile</a>
+        <a href="calendar.html" class="btn ghost">Calendar</a>
+        <a href="profile.html" class="btn primary">My Profile</a>
       </div>
     </section>
   </main>
@@ -32,6 +39,7 @@
     <a href="index.html" class="nav-item active">Home</a>
     <a href="find-spots.html" class="nav-item">Spots</a>
     <a href="events.html" class="nav-item">Events</a>
+    <a href="calendar.html" class="nav-item">Calendar</a>
     <a href="profile.html" class="nav-item">Profile</a>
   </nav>
 
