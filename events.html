@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Events • Roll ’n Connect</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#000000">
+
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Events</h1>
+  </header>
+
+  <main class="events-page">
+    <section class="calendar-section">
+      <h2>Calendar</h2>
+      <div id="calendar-root">
+        <!-- Calendar UI rendered by app.js / events.js -->
+      </div>
+    </section>
+
+    <section class="events-list" id="events-list">
+      <!-- Events rendered by events.js -->
+    </section>
+
+    <button class="fab" id="add-event-btn">+</button>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">Home</a>
+    <a href="find-spots.html" class="nav-item">Spots</a>
+    <a href="events.html" class="nav-item active">Events</a>
+    <a href="profile.html" class="nav-item">Profile</a>
+  </nav>
+
+  <!-- Event modal placeholder -->
+  <div class="modal" id="event-modal" hidden>
+    <div class="modal-content">
+      <button class="modal-close" data-close-modal>&times;</button>
+      <h2 id="event-modal-title">Event</h2>
+      <div id="event-modal-body"></div>
+      <button id="join-event-btn" class="btn primary">Join Event</button>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/events.js"></script>
+</body>
+</html>
