@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Find Spots • Roll ’n Connect</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#000000">
+
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Find Spots</h1>
+  </header>
+
+  <main class="spots-page">
+    <section class="filters">
+      <h2>Filters</h2>
+      <div class="filter-grid">
+        <button class="filter-chip" data-filter="water">Water</button>
+        <button class="filter-chip" data-filter="medical">Medical</button>
+        <button class="filter-chip" data-filter="food">Food</button>
+        <button class="filter-chip" data-filter="paved_trails">Paved Trails</button>
+        <button class="filter-chip" data-filter="parking_decks">Parking Decks</button>
+        <button class="filter-chip" data-filter="parking_lots">Parking Lots</button>
+        <button class="filter-chip" data-filter="skating_rinks">Skating Rinks</button>
+      </div>
+    </section>
+
+    <section class="map-wrapper">
+      <div id="map" class="map-container">
+        <!-- Google Maps will be injected by map.js -->
+      </div>
+    </section>
+
+    <section class="spots-list" id="spots-list">
+      <!-- Spots rendered by spots.js later -->
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">Home</a>
+    <a href="find-spots.html" class="nav-item active">Spots</a>
+    <a href="events.html" class="nav-item">Events</a>
+    <a href="profile.html" class="nav-item">Profile</a>
+  </nav>
+
+  <script src="js/app.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/spots.js"></script>
+</body>
+</html>
