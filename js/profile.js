@@ -1,12 +1,14 @@
 // js/profile.js
+// Profile: avatar, 3s clip, posts, likes, comments, tabs, counts, calendar hook
 
 let profileState = {
   username: "@username",
   bio: "Bio goes here…",
   avatar: "assets/images/default-avatar.png",
-  posts: [],       // { id, videoUrl, caption, likes, comments: [] }
-  savedSpots: [],  // spot IDs
-  joinedEvents: [] // event IDs
+  clipUrl: "",        // 3-second intro clip
+  posts: [],          // { id, videoUrl, caption, likes, comments: [] }
+  savedSpots: [],     // spot IDs
+  joinedEvents: []    // event IDs
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -14,6 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
   renderProfileHeader();
   renderProfileTabs();
   wireProfileActions();
+  renderPosts();
+  renderProfileEvents();
+  renderProfileSpots();
+  renderProfileCalendarCounts();
 });
 
 function loadProfileFromStorage() {
@@ -38,11 +44,17 @@ function renderProfileHeader() {
   const avatarEl = document.getElementById("profile-avatar");
   const usernameEl = document.getElementById("profile-username");
   const bioEl = document.getElementById("profile-bio");
+  const clipEl = document.getElementById("profile-clip");
 
   if (avatarEl) avatarEl.src = profileState.avatar;
   if (usernameEl) usernameEl.textContent = profileState.username;
   if (bioEl) bioEl.textContent = profileState.bio;
+  if (clipEl && profileState.clipUrl) clipEl.src = profileState.clipUrl;
 
+  renderProfileCalendarCounts();
+}
+
+function renderProfileCalendarCounts() {
   const postCountEl = document.getElementById("profile-post-count");
   const eventsCountEl = document.getElementById("profile-events-count");
   const spotsCountEl = document.getElementById("profile-spots-count");
@@ -53,14 +65,13 @@ function renderProfileHeader() {
 }
 
 function renderProfileTabs() {
-  renderPosts();
-  renderProfileEvents();
-  renderProfileSpots();
+  // content rendering handled separately
 }
 
 function wireProfileActions() {
   const editBtn = document.getElementById("edit-profile-btn");
   const changeAvatarBtn = document.getElementById("change-avatar-btn");
+  const changeClipBtn = document.getElementById("change-clip-btn");
   const modal = document.getElementById("edit-profile-modal");
   const form = document.getElementById("edit-profile-form");
 
@@ -80,6 +91,16 @@ function wireProfileActions() {
     });
   }
 
+  if (changeClipBtn) {
+    changeClipBtn.addEventListener("click", () => {
+      const url = prompt("Paste video URL for your 3-second clip:");
+      if (!url) return;
+      profileState.clipUrl = url;
+      saveProfileToStorage();
+      renderProfileHeader();
+    });
+  }
+
   if (modal) {
     modal.addEventListener("click", e => {
       if (e.target.dataset.closeModal !== undefined || e.target === modal) {
@@ -94,7 +115,7 @@ function wireProfileActions() {
       const usernameInput = document.getElementById("edit-username");
       const bioInput = document.getElementById("edit-bio");
 
-      if (usernameInput) profileState.username = usernameInput.value || profileState.username;
+      if (usernameInput) profileState.username = "@" + (usernameInput.value || profileState.username.replace(/^@/, ""));
       if (bioInput) profileState.bio = bioInput.value || "";
 
       saveProfileToStorage();
@@ -135,6 +156,8 @@ function switchTab(tabName) {
   tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === tabName));
   panels.forEach(p => p.classList.toggle("active", p.id === `profile-${tabName}`));
 }
+
+/* ---------------- POSTS (video, likes, comments) ---------------- */
 
 function renderPosts() {
   const postsEl = document.getElementById("profile-posts");
@@ -189,11 +212,12 @@ function likePost(postId) {
   if (!post) return;
 
   if (!post.likes) post.likes = 0;
-  if (post.likes >= 1) return; // one like per piece for now
+  if (post.likes >= 1) return; // one like per piece
 
   post.likes += 1;
   saveProfileToStorage();
   renderPosts();
+  renderProfileCalendarCounts();
 }
 
 function addCommentToPost(postId) {
@@ -212,6 +236,8 @@ function addCommentToPost(postId) {
   saveProfileToStorage();
   renderPosts();
 }
+
+/* ---------------- EVENTS + SPOTS LISTS ON PROFILE ---------------- */
 
 function renderProfileEvents() {
   const eventsEl = document.getElementById("profile-events");
