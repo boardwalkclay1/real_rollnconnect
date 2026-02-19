@@ -11,16 +11,26 @@
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+  <div class="stars1"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+
   <header class="app-header">
     <h1>Events</h1>
   </header>
 
   <main class="events-page">
-    <section class="calendar-section">
-      <h2>Calendar</h2>
-      <div id="calendar-root">
-        <!-- Calendar UI rendered by app.js / events.js -->
+    <section class="calendar-section glass">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <h2 style="font-size:1rem;">This month</h2>
+        <a href="calendar.html" class="btn small secondary">Open full calendar</a>
       </div>
+      <div id="calendar-root">
+        <!-- Mini calendar rendered by app.js/events.js -->
+      </div>
+      <p style="font-size:0.8rem; opacity:0.8; margin-top:8px;">
+        Tap a day to see sessions. Join an event to have it appear on your profile calendar.
+      </p>
     </section>
 
     <section class="events-list" id="events-list">
@@ -34,16 +44,17 @@
     <a href="index.html" class="nav-item">Home</a>
     <a href="find-spots.html" class="nav-item">Spots</a>
     <a href="events.html" class="nav-item active">Events</a>
+    <a href="calendar.html" class="nav-item">Calendar</a>
     <a href="profile.html" class="nav-item">Profile</a>
   </nav>
 
-  <!-- Event modal placeholder -->
+  <!-- Event modal -->
   <div class="modal" id="event-modal" hidden>
     <div class="modal-content">
       <button class="modal-close" data-close-modal>&times;</button>
       <h2 id="event-modal-title">Event</h2>
       <div id="event-modal-body"></div>
-      <button id="join-event-btn" class="btn primary">Join Event</button>
+      <button id="join-event-btn" class="btn primary">Join & Add to Calendar</button>
     </div>
   </div>
 
