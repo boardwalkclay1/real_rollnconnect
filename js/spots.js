@@ -1,6 +1,6 @@
 // js/spots.js
+// Spots list + basic filters + add session to calendar
 
-// Later we can load this from /data/spots.json or an API
 let spotsData = [
   {
     id: "spot-1",
@@ -24,9 +24,27 @@ let spotsData = [
 
 document.addEventListener("DOMContentLoaded", () => {
   const spotsListEl = document.getElementById("spots-list");
-  if (!spotsListEl) return;
+  const filterChips = document.querySelectorAll(".filter-chip");
 
-  renderSpotsList(spotsListEl, spotsData);
+  if (spotsListEl) {
+    renderSpotsList(spotsListEl, spotsData);
+  }
+
+  filterChips.forEach(chip => {
+    chip.addEventListener("click", () => {
+      const filter = chip.dataset.filter;
+      chip.classList.toggle("active");
+
+      const activeFilters = Array.from(document.querySelectorAll(".filter-chip.active"))
+        .map(c => c.dataset.filter);
+
+      const filtered = activeFilters.length
+        ? spotsData.filter(s => activeFilters.includes(s.type))
+        : spotsData;
+
+      if (spotsListEl) renderSpotsList(spotsListEl, filtered);
+    });
+  });
 });
 
 function renderSpotsList(container, spots) {
@@ -46,7 +64,7 @@ function renderSpotsList(container, spots) {
             <p class="spot-desc">${spot.description || ""}</p>
           </div>
           <div class="spot-card-actions">
-            <button class="btn small" data-action="view-spot" data-spot-id="${spot.id}">View</button>
+            <button class="btn small" data-action="view-spot" data-spot-id="${spot.id}">Session</button>
             <button class="btn small secondary" data-action="save-spot" data-spot-id="${spot.id}">Save</button>
           </div>
         </article>
@@ -57,7 +75,7 @@ function renderSpotsList(container, spots) {
   container.querySelectorAll("[data-action='view-spot']").forEach(btn => {
     btn.addEventListener("click", () => {
       const id = btn.dataset.spotId;
-      openSpotDetail(id);
+      openSpotSessionPrompt(id);
     });
   });
 
@@ -82,12 +100,29 @@ function formatSpotType(type) {
   return map[type] || type;
 }
 
-function openSpotDetail(spotId) {
+// Add a session from this spot directly to calendar
+function openSpotSessionPrompt(spotId) {
   const spot = spotsData.find(s => s.id === spotId);
   if (!spot) return;
 
-  alert(`${spot.name}\n\n${spot.description || ""}`);
-  // Later: real modal with map, add-to-calendar, comments, etc.
+  const date = prompt("Session date (YYYY-MM-DD):");
+  if (!date) return;
+
+  const time = prompt("Session time (HH:MM):") || "";
+  const note = prompt("Session note (optional):") || "";
+
+  if (typeof addToCalendar === "function") {
+    addToCalendar(date, {
+      type: "spot-session",
+      id: `${spot.id}-${date}-${time}`,
+      name: spot.name,
+      time,
+      location: spot.city || "",
+      note
+    });
+  }
+
+  alert("Session added to your calendar.");
 }
 
 function saveSpotToProfile(spotId) {
