@@ -1,5 +1,5 @@
 // js/spots.js
-// Spots list + basic filters + add session to calendar
+// Spots list + filters + add session to calendar + Google Maps integration
 
 let spotsData = [
   {
@@ -20,6 +20,7 @@ let spotsData = [
     lat: 52.3676,
     lng: 4.9041
   }
+  // later: add water, medical, food, parking, etc.
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -31,8 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   filterChips.forEach(chip => {
-    chip.addEventListener("click", () => {
-      const filter = chip.dataset.filter;
+    chip.addEventListener("click", async () => {
+      // Always grab user location before applying filters
+      await ensureUserLocation();
+
       chip.classList.toggle("active");
 
       const activeFilters = Array.from(document.querySelectorAll(".filter-chip.active"))
@@ -43,9 +46,24 @@ document.addEventListener("DOMContentLoaded", () => {
         : spotsData;
 
       if (spotsListEl) renderSpotsList(spotsListEl, filtered);
+      if (typeof renderSpotsOnMap === "function") {
+        renderSpotsOnMap(filtered);
+      }
     });
   });
 });
+
+async function ensureUserLocation() {
+  // map.js already tries to get location on init,
+  // but we call this before each filter to be sure.
+  if (window.rcUserLocation) return;
+  if (typeof getUserLocation === "function") {
+    const pos = await getUserLocation();
+    if (pos && window.rcMap) {
+      window.rcMap.setCenter(pos);
+    }
+  }
+}
 
 function renderSpotsList(container, spots) {
   if (!spots || spots.length === 0) {
@@ -64,7 +82,7 @@ function renderSpotsList(container, spots) {
             <p class="spot-desc">${spot.description || ""}</p>
           </div>
           <div class="spot-card-actions">
-            <button class="btn small" data-action="view-spot" data-spot-id="${spot.id}">Session</button>
+            <button class="btn small" data-action="session" data-spot-id="${spot.id}">Add Session</button>
             <button class="btn small secondary" data-action="save-spot" data-spot-id="${spot.id}">Save</button>
           </div>
         </article>
@@ -72,7 +90,7 @@ function renderSpotsList(container, spots) {
     })
     .join("");
 
-  container.querySelectorAll("[data-action='view-spot']").forEach(btn => {
+  container.querySelectorAll("[data-action='session']").forEach(btn => {
     btn.addEventListener("click", () => {
       const id = btn.dataset.spotId;
       openSpotSessionPrompt(id);
@@ -100,7 +118,6 @@ function formatSpotType(type) {
   return map[type] || type;
 }
 
-// Add a session from this spot directly to calendar
 function openSpotSessionPrompt(spotId) {
   const spot = spotsData.find(s => s.id === spotId);
   if (!spot) return;
