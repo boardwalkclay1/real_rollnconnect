@@ -7,7 +7,6 @@
 
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#000000">
-
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
@@ -25,17 +24,13 @@
         <h2 style="font-size:1rem;">This month</h2>
         <a href="calendar.html" class="btn small secondary">Open full calendar</a>
       </div>
-      <div id="calendar-root">
-        <!-- Mini calendar rendered by app.js/events.js -->
-      </div>
+      <div id="calendar-root"></div>
       <p style="font-size:0.8rem; opacity:0.8; margin-top:8px;">
-        Tap a day to see sessions. Join an event to have it appear on your profile calendar.
+        Tap a day to see sessions. Join an event to have it appear on your calendar and profile.
       </p>
     </section>
 
-    <section class="events-list" id="events-list">
-      <!-- Events rendered by events.js -->
-    </section>
+    <section class="events-list" id="events-list"></section>
 
     <button class="fab" id="add-event-btn">+</button>
   </main>
@@ -48,7 +43,6 @@
     <a href="profile.html" class="nav-item">Profile</a>
   </nav>
 
-  <!-- Event modal -->
   <div class="modal" id="event-modal" hidden>
     <div class="modal-content">
       <button class="modal-close" data-close-modal>&times;</button>
