@@ -7,7 +7,9 @@
 
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#000000">
+
   <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="https://unpkg.com/calendar-js/dist/calendar.min.css">
 </head>
 <body>
   <div class="stars1"></div>
@@ -22,8 +24,9 @@
     <section class="glass">
       <h2 class="section-title" style="font-size:1.4rem;">Your sessions</h2>
       <p style="font-size:0.85rem; opacity:0.8; margin-bottom:10px;">
-        This calendar shows everything you’ve joined or added from Spots and Events. Tap a day to see details.
+        Tap a day to see your sessions, events, and saved spot sessions.
       </p>
+
       <div id="calendar-full"></div>
     </section>
 
@@ -39,5 +42,7 @@
   </nav>
 
   <script src="js/app.js"></script>
+  <script src="https://unpkg.com/calendar-js/dist/calendar.min.js"></script>
+  <script src="js/calendar-init.js"></script>
 </body>
 </html>
