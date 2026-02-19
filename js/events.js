@@ -1,4 +1,5 @@
 // js/events.js
+// Events list + create + join + calendar integration
 
 let eventsData = [
   {
@@ -7,7 +8,6 @@ let eventsData = [
     date: "2026-02-20",
     time: "19:00",
     location: "City Rink, Amsterdam",
-    spotId: "spot-1",
     description: "Group night skate, all levels welcome."
   },
   {
@@ -16,7 +16,6 @@ let eventsData = [
     date: "2026-02-22",
     time: "14:00",
     location: "Canal Trail, Amsterdam",
-    spotId: "spot-2",
     description: "Chill cruise along the canal trail."
   }
 ];
@@ -80,9 +79,11 @@ function openCreateEventPrompt() {
   if (!title) return;
 
   const date = prompt("Event date (YYYY-MM-DD):");
-  const time = prompt("Event time (HH:MM):");
-  const location = prompt("Location:");
-  const description = prompt("Description:");
+  if (!date) return;
+
+  const time = prompt("Event time (HH:MM):") || "";
+  const location = prompt("Location:") || "";
+  const description = prompt("Description:") || "";
 
   const newEvent = {
     id: `event-${Date.now()}`,
@@ -94,11 +95,23 @@ function openCreateEventPrompt() {
   };
 
   eventsData.push(newEvent);
+
+  // Add to global calendar
+  if (typeof addToCalendar === "function") {
+    addToCalendar(newEvent.date, {
+      type: "event",
+      id: newEvent.id,
+      title: newEvent.title,
+      time: newEvent.time,
+      location: newEvent.location
+    });
+  }
+
   const eventsListEl = document.getElementById("events-list");
   if (eventsListEl) renderEventsList(eventsListEl, eventsData);
 
-  saveJoinedEvent(newEvent.id, true); // auto-join creator
-  alert("Event created.");
+  saveJoinedEvent(newEvent.id, true); // creator auto-joined
+  alert("Event created and added to your calendar.");
 }
 
 function initEventModal() {
@@ -152,6 +165,20 @@ function closeEventModal() {
 }
 
 function joinEvent(eventId) {
+  const event = eventsData.find(e => e.id === eventId);
+  if (!event) return;
+
+  // Add to global calendar
+  if (typeof addToCalendar === "function") {
+    addToCalendar(event.date, {
+      type: "event",
+      id: event.id,
+      title: event.title,
+      time: event.time,
+      location: event.location
+    });
+  }
+
   saveJoinedEvent(eventId, true);
   alert("You joined this event. It will show in your profile and calendar.");
 }
