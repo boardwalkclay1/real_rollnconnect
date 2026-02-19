@@ -22,7 +22,7 @@
     <section class="glass">
       <h2 class="section-title" style="font-size:1.4rem;">Filters</h2>
       <p style="font-size:0.85rem; opacity:0.8; margin-bottom:10px;">
-        Tap a filter — we grab your location and show nearby results instantly.
+        Tap a filter — we grab your location and show nearby results instantly. Rinks can be searched nationwide.
       </p>
 
       <div class="filter-grid">
@@ -33,6 +33,17 @@
         <button class="filter-chip" data-filter="parking garage">🏢 Parking Decks</button>
         <button class="filter-chip" data-filter="parking lot">🅿️ Parking Lots</button>
         <button class="filter-chip" data-filter="skating rink">⛸️ Skating Rinks</button>
+      </div>
+
+      <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:center;">
+        <label style="font-size:0.8rem; opacity:0.8;">
+          <input type="checkbox" id="nationwide-rinks-toggle">
+          Search skating rinks nationwide
+        </label>
+        <label style="font-size:0.8rem; opacity:0.8;">
+          <input type="checkbox" id="live-tracking-toggle">
+          Live tracking
+        </label>
       </div>
     </section>
 
@@ -47,10 +58,14 @@
       </iframe>
     </section>
 
+    <section class="spots-list glass" id="spots-list" style="margin-top:12px;">
+      <!-- Local spot list for tapping, sessions, saving -->
+    </section>
+
     <section class="glass" style="margin-top:10px;">
       <h3 style="font-size:1rem; margin-bottom:6px;">Sessions & calendar</h3>
       <p style="font-size:0.8rem; opacity:0.8;">
-        When you open a spot, you can add a session to your calendar. It will show on Events, Calendar, and Profile.
+        Tap a spot below to open details, add a session to your calendar, or save it to your profile.
       </p>
     </section>
   </main>
