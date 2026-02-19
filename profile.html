@@ -7,7 +7,6 @@
 
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#000000">
-
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
@@ -20,7 +19,6 @@
   </header>
 
   <main class="profile-page">
-    <!-- Top: avatar + 3-second clip + basic info -->
     <section class="profile-header glass">
       <div class="avatar-wrapper">
         <img id="profile-avatar" src="assets/images/default-avatar.png" alt="Avatar">
@@ -36,11 +34,9 @@
     <section class="glass" style="padding:16px 16px 20px;">
       <h3 style="font-size:0.95rem; margin-bottom:6px;">Intro clip</h3>
       <p style="font-size:0.8rem; opacity:0.8; margin-bottom:8px;">
-        Add a 3‑second clip that plays on your profile. Keep it simple: one move, one vibe.
+        Add a 3‑second clip that plays on your profile. One move, one vibe.
       </p>
-      <video id="profile-clip" controls style="width:100%; border-radius:16px; max-height:220px; background:#000;">
-        <!-- src set by profile.js -->
-      </video>
+      <video id="profile-clip" controls style="width:100%; border-radius:16px; max-height:220px; background:#000;"></video>
       <button id="change-clip-btn" class="btn small" style="margin-top:8px;">Change clip</button>
     </section>
 
@@ -66,18 +62,11 @@
     </section>
 
     <section class="profile-content">
-      <div id="profile-posts" class="tab-panel active">
-        <!-- Video posts, likes, comments -->
-      </div>
-      <div id="profile-events" class="tab-panel">
-        <!-- Joined events -->
-      </div>
-      <div id="profile-spots" class="tab-panel">
-        <!-- Saved spots -->
-      </div>
+      <div id="profile-posts" class="tab-panel active"></div>
+      <div id="profile-events" class="tab-panel"></div>
+      <div id="profile-spots" class="tab-panel"></div>
     </section>
 
-    <!-- Personal calendar at bottom -->
     <section class="glass" style="margin-top:16px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h3 style="font-size:0.95rem;">Your calendar</h3>
@@ -86,9 +75,7 @@
       <p style="font-size:0.8rem; opacity:0.8; margin-bottom:8px;">
         This shows your upcoming sessions from Events and Spots. You can add more from any page.
       </p>
-      <div id="profile-calendar">
-        <!-- Small personal calendar view rendered by app.js/profile.js -->
-      </div>
+      <div id="profile-calendar"></div>
     </section>
   </main>
 
@@ -100,7 +87,6 @@
     <a href="profile.html" class="nav-item active">Profile</a>
   </nav>
 
-  <!-- Edit profile modal -->
   <div class="modal" id="edit-profile-modal" hidden>
     <div class="modal-content">
       <button class="modal-close" data-close-modal>&times;</button>
@@ -114,9 +100,6 @@
           Bio
           <textarea id="edit-bio"></textarea>
         </label>
-        <p style="font-size:0.75rem; opacity:0.7; margin-top:6px;">
-          Your profile is your hub. Keep it clear so people know how to connect with you.
-        </p>
         <button type="submit" class="btn primary" style="margin-top:10px;">Save</button>
       </form>
     </div>
