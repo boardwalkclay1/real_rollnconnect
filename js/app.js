@@ -1,39 +1,58 @@
 /* ---------------------------------------------------
-   ROLL ’N CONNECT — GLOBAL APP ENGINE
+   ROLL ’N CONNECT — GLOBAL APP ENGINE (CLERK READY)
    Calendar • Events • Spots • Profile Sync
 --------------------------------------------------- */
 
 const RCApp = {
   user: null,
-  events: [],          // all events created or joined
-  spots: [],           // all saved spots
-  calendar: {},        // { "2026-02-20": [eventObj, spotSessionObj] }
+  userId: null,
+  events: [],
+  spots: [],
+  calendar: {},
   selectedDay: null
 };
 
 /* ---------------------------------------------------
-   INIT
+   INIT (WAIT FOR CLERK)
 --------------------------------------------------- */
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  // Wait for Clerk to load
+  if (window.Clerk) {
+    await Clerk.load();
+
+    if (Clerk.user) {
+      RCApp.user = Clerk.user;
+      RCApp.userId = Clerk.user.id;
+    }
+  }
+
+  // Load user-specific data
   loadFromStorage();
+
   registerServiceWorker();
   initMiniCalendars();
   initFullCalendar();
 });
 
 /* ---------------------------------------------------
-   STORAGE
+   STORAGE (USER-SCOPED)
 --------------------------------------------------- */
+function storageKey(key) {
+  // If no user yet, fallback to global keys
+  if (!RCApp.userId) return `rc_${key}`;
+  return `rc_${RCApp.userId}_${key}`;
+}
+
 function loadFromStorage() {
-  RCApp.events = JSON.parse(localStorage.getItem("rc_events") || "[]");
-  RCApp.spots = JSON.parse(localStorage.getItem("rc_spots") || "[]");
-  RCApp.calendar = JSON.parse(localStorage.getItem("rc_calendar") || "{}");
+  RCApp.events = JSON.parse(localStorage.getItem(storageKey("events")) || "[]");
+  RCApp.spots = JSON.parse(localStorage.getItem(storageKey("spots")) || "[]");
+  RCApp.calendar = JSON.parse(localStorage.getItem(storageKey("calendar")) || "{}");
 }
 
 function saveToStorage() {
-  localStorage.setItem("rc_events", JSON.stringify(RCApp.events));
-  localStorage.setItem("rc_spots", JSON.stringify(RCApp.spots));
-  localStorage.setItem("rc_calendar", JSON.stringify(RCApp.calendar));
+  localStorage.setItem(storageKey("events"), JSON.stringify(RCApp.events));
+  localStorage.setItem(storageKey("spots"), JSON.stringify(RCApp.spots));
+  localStorage.setItem(storageKey("calendar"), JSON.stringify(RCApp.calendar));
 }
 
 /* ---------------------------------------------------
@@ -199,7 +218,7 @@ function refreshAllCalendars() {
 }
 
 /* ---------------------------------------------------
-   GLOBAL EXPORTS FOR OTHER JS FILES
+   GLOBAL EXPORTS
 --------------------------------------------------- */
 window.RCApp = RCApp;
 window.addToCalendar = addToCalendar;
