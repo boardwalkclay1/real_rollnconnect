@@ -9,31 +9,41 @@
   <meta name="theme-color" content="#000000">
   <link rel="stylesheet" href="css/app.css">
 
-  <!-- Clerk -->
+  <!-- Clerk (correct initialization) -->
   <script
     async
     crossorigin="anonymous"
+    data-clerk-publishable-key="YOUR_PUBLISHABLE_KEY_HERE"
     src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js">
   </script>
 
   <script>
-    window.addEventListener("load", async () => {
-      await Clerk.load();
+    window.addEventListener("DOMContentLoaded", async () => {
+      // Wait for Clerk to load safely
+      if (window.Clerk) {
+        await Clerk.load();
 
-      // If already signed in → go straight to dashboard
-      if (Clerk.user) {
-        window.location.href = "rc-dash.html";
+        // If already signed in → go to dashboard
+        if (Clerk.user) {
+          window.location.href = "rc-dash.html";
+          return;
+        }
       }
     });
   </script>
 
   <style>
     body {
-      background: url("images/rnc.jpg") no-repeat center center fixed;
-      background-size: cover;
       margin: 0;
       padding: 0;
+      background-image: url("image/rnc.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
       overflow-x: hidden;
+      color: white;
+      font-family: system-ui, sans-serif;
     }
 
     .landing-wrapper {
@@ -41,18 +51,17 @@
       z-index: 5;
       padding: 40px 20px;
       text-align: center;
-      color: white;
     }
 
     .hero-title {
-      font-size: 2.4rem;
+      font-size: 2.6rem;
       font-weight: 700;
       margin-bottom: 10px;
       text-shadow: 0 0 12px rgba(0,0,0,0.6);
     }
 
     .hero-sub {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       opacity: 0.85;
       margin-bottom: 30px;
       text-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -87,7 +96,7 @@
 </head>
 
 <body>
-  <!-- Cinematic star layers -->
+  <!-- Stars only load if they exist -->
   <div class="stars1"></div>
   <div class="stars2"></div>
   <div class="stars3"></div>
@@ -95,8 +104,7 @@
   <div class="landing-wrapper">
     <h1 class="hero-title">Roll ’n Connect</h1>
     <p class="hero-sub">
-      Discover spots. Join events. Track sessions.  
-      Your skating ecosystem starts here.
+      Discover spots. Join events. Track sessions.
     </p>
 
     <div class="cta-buttons">
